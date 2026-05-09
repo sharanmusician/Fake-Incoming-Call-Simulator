@@ -13,123 +13,139 @@
             --green: #81c995;
             --nav: #282a2d;
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Google Sans', Roboto, sans-serif; }
-        body { margin: 0; background: #000; color: var(--on-surf); overflow: hidden; height: 100vh; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Roboto', sans-serif; }
+        body { margin: 0; background: #000; color: var(--on-surf); overflow: hidden; height: 100vh; width: 100vw; }
 
-        /* 1. SETUP (Professional UI) */
-        #setup { padding: 40px 24px; display: flex; flex-direction: column; height: 100%; justify-content: center; background: #000; position: relative; z-index: 1000; }
+        /* 1. SETUP UI */
+        #setup { 
+            padding: 40px 24px; display: flex; flex-direction: column; height: 100%; 
+            justify-content: center; background: #000; position: relative; z-index: 1000; 
+        }
         .setup-card { background: #111; padding: 30px; border-radius: 28px; border: 1px solid #333; }
-        input { width: 100%; padding: 18px; margin: 12px 0; border: none; background: #252525; color: #fff; border-radius: 16px; font-size: 16px; }
-        .btn-set { background: var(--blue); color: #062e6f; padding: 18px; border-radius: 100px; border: none; font-weight: 500; width: 100%; margin-top: 10px; }
+        label { color: var(--blue); font-size: 12px; font-weight: bold; margin-left: 5px; }
+        input { width: 100%; padding: 18px; margin: 12px 0 20px; border: none; background: #252525; color: #fff; border-radius: 16px; font-size: 16px; }
+        .btn-set { background: var(--blue); color: #062e6f; padding: 18px; border-radius: 100px; border: none; font-weight: bold; width: 100%; font-size: 16px; }
 
         .full { position: fixed; inset: 0; width: 100%; height: 100%; display: none; z-index: 9999; flex-direction: column; }
 
         /* 2. CALL UI */
         #call-ui { background: var(--surface); padding-top: 12vh; align-items: center; }
-        .avatar { width: 80px; height: 80px; background: #303134; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: #8ab4f8; margin-bottom: 20px; }
-        .caller-name { font-size: 32px; font-weight: 400; }
-        .status { color: #9aa0a6; font-size: 18px; margin-top: 8px; }
-        .controls { margin-top: auto; padding-bottom: 8vh; width: 100%; pointer-events: none; opacity: 0.5; } /* Locked by default */
-        .controls.active { pointer-events: auto; opacity: 1; }
-        .btn-r { width: 75px; height: 75px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; }
+        .avatar { width: 90px; height: 90px; background: #3c4043; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #8ab4f8; margin-bottom: 24px; }
+        .caller-name { font-size: 36px; font-weight: 400; text-align: center; }
+        .status { color: #9aa0a6; font-size: 18px; margin-top: 10px; }
+
+        .controls { margin-top: auto; padding-bottom: 8vh; width: 100%; }
+        .btn-r { width: 72px; height: 72px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; }
         .dec { background: var(--red); transform: rotate(135deg); }
         .ans { background: var(--green); }
 
         /* 3. RECENTS */
         #history-ui { background: #000; padding: 0; }
-        .list { flex: 1; overflow-y: auto; padding: 20px; }
-        .item { display: flex; align-items: center; padding: 15px 0; gap: 15px; border-bottom: 1px solid #111; }
+        .list { flex: 1; overflow-y: auto; padding: 10px 20px; }
+        .item { display: flex; align-items: center; padding: 16px 0; gap: 15px; border-bottom: 1px solid #1a1a1a; }
         .item-info { flex: 1; }
-        .missed { color: var(--red); }
-        .nav-bar { height: 75px; background: var(--nav); display: flex; justify-content: space-around; align-items: center; border-radius: 25px 25px 0 0; }
-        
-        /* 4. DIALPAD MODAL */
-        #dialpad-view { background: #1a1c1e; z-index: 10001; }
-        .dial-header { padding: 40px 20px; text-align: center; font-size: 30px; height: 120px; }
-        .grid-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 20px 40px; }
-        .num-btn { width: 75px; height: 75px; background: #303134; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; }
-        .num-btn span { font-size: 10px; color: #9aa0a6; }
-        .fab { position: absolute; bottom: 95px; right: 25px; width: 56px; height: 56px; background: var(--blue); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #041e49; }
+        .missed { color: var(--red) !important; }
+        .item-name { font-size: 17px; margin-bottom: 4px; }
+        .item-sub { font-size: 13px; color: #9aa0a6; }
+
+        .nav-bar { height: 80px; background: var(--nav); display: flex; justify-content: space-around; align-items: center; border-radius: 28px 28px 0 0; }
+        .nav-item { text-align: center; font-size: 11px; color: #9aa0a6; }
+
+        /* 4. DIALPAD */
+        #dialpad-view { background: #1a1c1e; padding: 20px; }
+        .dial-header { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 35px; letter-spacing: 2px; }
+        .grid-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center; padding-top: 20px; }
+        .num-btn { width: 75px; height: 75px; background: #303134; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 28px; }
+        .num-btn span { font-size: 10px; color: #9aa0a6; margin-top: -2px; }
+        .fab { position: absolute; bottom: 100px; right: 25px; width: 56px; height: 56px; background: var(--blue); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #041e49; }
     </style>
 </head>
 <body>
 
     <div id="setup">
         <div class="setup-card">
-            <h2 style="margin-top:0; font-weight:400">Call Configuration</h2>
-            <input type="text" id="callerName" placeholder="Name" value="Mom">
+            <h1 style="font-weight:300; margin:0 0 30px;">Dialer Config</h1>
+            <label>CALLER NAME</label>
+            <input type="text" id="callerName" value="Mom">
+            <label>TRIGGER TIME</label>
             <input type="time" id="callTime">
-            <button class="btn-set" onclick="init()">Save & Initialize</button>
+            <button class="btn-set" onclick="startSystem()">Schedule Prank</button>
         </div>
     </div>
 
-    <div id="black-scr" class="full" style="background:#000;"></div>
+    <div id="fake-black" class="full" style="background:#000;"></div>
 
     <div id="call-ui" class="full">
         <div class="avatar">👤</div>
         <div id="ui-name" class="caller-name">Caller</div>
         <div id="ui-status" class="status">Incoming call</div>
-        <div id="call-ctrls" class="controls active" style="margin-top:auto">
+        <div class="controls">
             <div id="inc-row" style="display:flex; justify-content:space-evenly; width:100%">
                 <button class="btn-r dec" onclick="terminate('Declined')">📞</button>
                 <button class="btn-r ans" onclick="accept()">📞</button>
             </div>
-            <div id="active-row" style="display:none; text-align:center">
+            <div id="act-row" style="display:none; text-align:center">
                 <button class="btn-r dec" style="margin:0 auto" onclick="terminate('Ended')">📞</button>
             </div>
         </div>
     </div>
 
     <div id="history-ui" class="full">
-        <div style="padding:20px; font-size:22px">Recents</div>
-        <div class="list" id="hist-list">
+        <div style="padding:24px 24px 10px; font-size:22px; font-weight:400">Recents</div>
+        <div class="list">
             <div class="item">
-                <div class="avatar" style="width:45px; height:45px; font-size:18px; margin:0">👤</div>
+                <div class="avatar" style="width:40px; height:40px; font-size:18px; margin:0">👤</div>
                 <div class="item-info">
-                    <div id="dyn-name" class="missed">Mom</div>
-                    <div style="font-size:12px; color:#9aa0a6">Mobile • Just now</div>
+                    <div id="hist-dynamic-name" class="item-name missed">Mom</div>
+                    <div class="item-sub">Mobile • Just now</div>
                 </div>
-                <div style="font-size:22px" onclick="reCall('Mom')">📞</div>
+                <div style="font-size:22px" onclick="reCall(document.getElementById('callerName').value)">📞</div>
             </div>
             <div class="item">
-                <div class="avatar" style="width:45px; height:45px; font-size:18px; margin:0">👤</div>
-                <div class="item-info"><div class="missed">Dad</div><div style="font-size:12px; color:#9aa0a6">Mobile • 2 hrs ago</div></div>
+                <div class="avatar" style="width:40px; height:40px; font-size:18px; margin:0">👤</div>
+                <div class="item-info">
+                    <div class="item-name missed">Dad</div>
+                    <div class="item-sub">Mobile • 2 hrs ago</div>
+                </div>
                 <div style="font-size:22px" onclick="reCall('Dad')">📞</div>
             </div>
             <div class="item">
-                <div class="avatar" style="width:45px; height:45px; font-size:18px; margin:0">👤</div>
-                <div class="item-info"><div>Sisy</div><div style="font-size:12px; color:#9aa0a6">Mobile • Yesterday</div></div>
+                <div class="avatar" style="width:40px; height:40px; font-size:18px; margin:0">👤</div>
+                <div class="item-info">
+                    <div class="item-name">Sisy</div>
+                    <div class="item-sub">Mobile • Yesterday</div>
+                </div>
                 <div style="font-size:22px" onclick="reCall('Sisy')">📞</div>
             </div>
         </div>
-        <div class="fab" onclick="openDial()">⌨️</div>
+        <div class="fab" onclick="showDial()">⌨️</div>
         <div class="nav-bar">
-            <div style="text-align:center; font-size:11px; color:#9aa0a6">⭐<br>Favorites</div>
-            <div style="text-align:center; font-size:11px; color:var(--blue)">🕒<br>Recents</div>
-            <div style="text-align:center; font-size:11px; color:#9aa0a6">👤<br>Contacts</div>
+            <div class="nav-item">⭐<br>Favorites</div>
+            <div class="nav-item" style="color:var(--blue)">🕒<br>Recents</div>
+            <div class="nav-item">👤<br>Contacts</div>
         </div>
     </div>
 
     <div id="dialpad-view" class="full">
-        <div class="dial-header" id="dial-num"></div>
+        <div class="dial-header" id="dial-display"></div>
         <div class="grid-pad">
-            <div class="num-btn" onclick="press('1')">1<span>&nbsp;</span></div>
-            <div class="num-btn" onclick="press('2')">2<span>ABC</span></div>
-            <div class="num-btn" onclick="press('3')">3<span>DEF</span></div>
-            <div class="num-btn" onclick="press('4')">4<span>GHI</span></div>
-            <div class="num-btn" onclick="press('5')">5<span>JKL</span></div>
-            <div class="num-btn" onclick="press('6')">6<span>MNO</span></div>
-            <div class="num-btn" onclick="press('7')">7<span>PQRS</span></div>
-            <div class="num-btn" onclick="press('8')">8<span>TUV</span></div>
-            <div class="num-btn" onclick="press('9')">9<span>WXYZ</span></div>
-            <div class="num-btn" onclick="press('*')">*</div>
-            <div class="num-btn" onclick="press('0')">0<span>+</span></div>
-            <div class="num-btn" onclick="press('#')">#</div>
+            <div class="num-btn" onclick="dt('1')">1<span> </span></div>
+            <div class="num-btn" onclick="dt('2')">2<span>ABC</span></div>
+            <div class="num-btn" onclick="dt('3')">3<span>DEF</span></div>
+            <div class="num-btn" onclick="dt('4')">4<span>GHI</span></div>
+            <div class="num-btn" onclick="dt('5')">5<span>JKL</span></div>
+            <div class="num-btn" onclick="dt('6')">6<span>MNO</span></div>
+            <div class="num-btn" onclick="dt('7')">7<span>PQRS</span></div>
+            <div class="num-btn" onclick="dt('8')">8<span>TUV</span></div>
+            <div class="num-btn" onclick="dt('9')">9<span>WXYZ</span></div>
+            <div class="num-btn" onclick="dt('*')">*</div>
+            <div class="num-btn" onclick="dt('0')">0<span>+</span></div>
+            <div class="num-btn" onclick="dt('#')">#</div>
         </div>
-        <div style="display:flex; justify-content:center; margin-top:20px">
-            <button class="btn-r ans" onclick="reCall(document.getElementById('dial-num').innerText || 'Unknown')">📞</button>
+        <div style="display:flex; justify-content:center; margin-top:40px">
+            <button class="btn-r ans" onclick="reCall(document.getElementById('dial-display').innerText || 'Unknown')">📞</button>
         </div>
-        <div style="position:absolute; bottom:30px; width:100%; text-align:center; color:var(--blue)" onclick="closeDial()">Close</div>
+        <p style="text-align:center; color:var(--blue); margin-top:30px;" onclick="hideDial()">CLOSE</p>
     </div>
 
     <audio id="ring" src="https://assets.mixkit.co/sfx/preview/mixkit-cell-phone-vibrating-ringing-2751.mp3" loop></audio>
@@ -137,40 +153,41 @@
     <script>
         let wl = null, vib = null, timer = null;
 
-        async function init() {
-            const t = document.getElementById('callTime').value;
-            if(!t) return;
+        async function startSystem() {
+            const time = document.getElementById('callTime').value;
+            if(!time) return;
             document.documentElement.requestFullscreen().catch(()=>{});
             if('wakeLock' in navigator) wl = await navigator.wakeLock.request('screen');
-            document.getElementById('setup').style.display='none';
-            document.getElementById('black-scr').style.display='flex';
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('fake-black').style.display = 'flex';
             setInterval(() => {
                 const now = new Date();
-                if(`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` === t) trigger();
+                const cur = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+                if(cur === time) trigger();
             }, 1000);
         }
 
         function trigger() {
-            document.getElementById('black-scr').style.display='none';
-            document.getElementById('call-ui').style.display='flex';
+            document.getElementById('fake-black').style.display = 'none';
+            document.getElementById('call-ui').style.display = 'flex';
             document.getElementById('ui-name').innerText = document.getElementById('callerName').value;
-            document.getElementById('call-ctrls').classList.add('active'); // Enable buttons
             document.getElementById('ring').play();
-            vib = setInterval(() => { navigator.vibrate([1000, 500, 1000]); }, 2500);
+            // Realistic Pulsed Vibration (800ms on, 1s off)
+            if(navigator.vibrate) {
+                navigator.vibrate([800, 1000, 800, 1000]);
+                vib = setInterval(() => { navigator.vibrate([800, 1000, 800, 1000]); }, 3600);
+            }
         }
 
         function accept() {
             clearInterval(vib);
             document.getElementById('ring').pause();
-            document.getElementById('inc-row').style.display='none';
-            document.getElementById('active-row').style.display='block';
-            document.getElementById('call-ctrls').classList.remove('active'); // Disable buttons during speech
-            
+            document.getElementById('inc-row').style.display = 'none';
+            document.getElementById('act-row').style.display = 'block';
             let s = 0;
-            timer = setInterval(() => { 
-                s++; 
+            timer = setInterval(() => {
+                s++;
                 document.getElementById('ui-status').innerText = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-                if(s === 2) document.getElementById('call-ctrls').classList.add('active'); // Re-enable after 2s
             }, 1000);
         }
 
@@ -179,27 +196,27 @@
             document.getElementById('ring').pause();
             document.getElementById('ui-status').innerText = (type === 'Declined') ? 'Missed call' : 'Call ended';
             setTimeout(() => {
-                document.getElementById('call-ui').style.display='none';
-                document.getElementById('history-ui').style.display='flex';
-                document.getElementById('dyn-name').innerText = document.getElementById('callerName').value;
-                if(type !== 'Declined') document.getElementById('dyn-name').classList.remove('missed');
+                document.getElementById('call-ui').style.display = 'none';
+                document.getElementById('history-ui').style.display = 'flex';
+                document.getElementById('hist-dynamic-name').innerText = document.getElementById('callerName').value;
+                if(type !== 'Declined') document.getElementById('hist-dynamic-name').classList.remove('missed');
             }, 800);
         }
 
         function reCall(name) {
-            document.getElementById('dialpad-view').style.display='none';
-            document.getElementById('history-ui').style.display='none';
-            document.getElementById('call-ui').style.display='flex';
+            document.getElementById('dialpad-view').style.display = 'none';
+            document.getElementById('history-ui').style.display = 'none';
+            document.getElementById('call-ui').style.display = 'flex';
             document.getElementById('ui-name').innerText = name;
             document.getElementById('ui-status').innerText = "Calling...";
-            document.getElementById('inc-row').style.display='none';
-            document.getElementById('active-row').style.display='block';
-            setTimeout(accept, 2000); // Auto-accept re-call for realism
+            document.getElementById('inc-row').style.display = 'none';
+            document.getElementById('act-row').style.display = 'block';
+            setTimeout(accept, 2000); 
         }
 
-        function openDial() { document.getElementById('dialpad-view').style.display='flex'; }
-        function closeDial() { document.getElementById('dialpad-view').style.display='none'; }
-        function press(n) { document.getElementById('dial-num').innerText += n; }
+        function showDial() { document.getElementById('dialpad-view').style.display = 'flex'; }
+        function hideDial() { document.getElementById('dialpad-view').style.display = 'none'; }
+        function dt(n) { document.getElementById('dial-display').innerText += n; }
     </script>
 </body>
 </html>
