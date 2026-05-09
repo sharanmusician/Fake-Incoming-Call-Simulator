@@ -2,168 +2,185 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aethercore | Premium Call Interface</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Phone</title>
     <style>
-        :root { --bg-dark: #0a0a0a; --glass: rgba(255, 255, 255, 0.1); }
-        body { margin: 0; font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif; background: #000; color: #fff; -webkit-font-smoothing: antialiased; }
-        
-        /* Premium Setup UI */
-        #setup { padding: 40px 20px; display: flex; flex-direction: column; height: 100vh; justify-content: center; transition: opacity 0.5s; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-bottom: 8px; }
-        input { width: 100%; box-sizing: border-box; padding: 16px; border: 1px solid #222; background: #111; color: #fff; border-radius: 12px; font-size: 18px; outline: none; }
-        .btn-start { background: #fff; color: #000; padding: 18px; border-radius: 12px; border: none; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        
-        /* Fullscreen Overlays */
-        .full-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: none; z-index: 10000; }
-        #fake-black { background: #000; cursor: none; }
-        
-        /* Realistic Call Interface */
-        #call-ui { background: linear-gradient(to bottom, #1c1c1c, #000); flex-direction: column; align-items: center; justify-content: space-between; padding: 80px 0 60px 0; }
-        .caller-meta { text-align: center; }
-        .caller-meta h1 { font-size: 36px; font-weight: 400; margin: 0; }
-        .status { color: rgba(255,255,255,0.6); font-size: 18px; margin-top: 8px; }
-        
-        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 80%; margin-bottom: 40px; }
-        .action-item { text-align: center; font-size: 12px; opacity: 0.8; }
-        .icon-circle { width: 65px; height: 65px; background: var(--glass); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-        
-        .call-controls { width: 100%; display: flex; justify-content: space-around; align-items: center; padding-bottom: 40px; }
-        .btn-call { width: 75px; height: 75px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; border: none; color: white; }
-        .decline { background: #ff3b30; transform: rotate(135deg); }
-        .accept { background: #4cd964; }
-        .end-call { background: #ff3b30; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 24px; }
+        :root {
+            --google-red: #ea4335;
+            --google-green: #34a853;
+            --dark-surface: #1a1c1e;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; width: 100vw; height: 100vh; 
+            background: #000; color: #e2e2e2;
+            font-family: 'Roboto', sans-serif; overflow: hidden;
+        }
 
-        /* Summary View */
-        #summary { background: #000; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .summary-card { padding: 40px; border-radius: 24px; background: #111; width: 80%; }
+        /* Setup UI */
+        #setup { 
+            padding: 40px 24px; display: flex; flex-direction: column; height: 100%; justify-content: center;
+            background: #000;
+        }
+        .input-card { background: #111; padding: 24px; border-radius: 28px; margin-bottom: 20px; }
+        input { 
+            width: 100%; padding: 16px; margin: 10px 0; border: none; 
+            background: #252525; color: #fff; border-radius: 12px; font-size: 16px;
+        }
+        .btn-prime { 
+            background: #d2e3fc; color: #041e49; padding: 18px; 
+            border-radius: 100px; border: none; font-weight: 600; width: 100%;
+        }
+
+        /* Fullscreen Overlays */
+        .full-layer { 
+            position: fixed; inset: 0; width: 100%; height: 100%; 
+            display: none; z-index: 9999; flex-direction: column;
+        }
+
+        /* Google Call Style */
+        #call-ui { background: var(--dark-surface); padding-top: 15vh; }
+        .avatar { 
+            width: 90px; height: 90px; background: #3c4043; border-radius: 50%; 
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 40px; color: #8ab4f8;
+        }
+        .caller-name { font-size: 32px; text-align: center; font-weight: 400; }
+        .call-status { text-align: center; color: #9aa0a6; margin-top: 8px; font-size: 16px; }
+
+        /* Controls Area */
+        .controls-container { margin-top: auto; padding-bottom: 60px; width: 100%; }
+        
+        /* Incoming Buttons */
+        #incoming-btns { display: flex; justify-content: space-around; width: 100%; padding: 0 40px; }
+        .circle-btn { 
+            width: 72px; height: 72px; border-radius: 50%; border: none;
+            display: flex; align-items: center; justify-content: center; font-size: 28px;
+        }
+        .ans { background: var(--google-green); color: white; }
+        .dec { background: var(--google-red); color: white; transform: rotate(135deg); }
+
+        /* Active Grid */
+        #active-grid { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; padding: 0 30px 40px;
+        }
+        .grid-item { text-align: center; font-size: 13px; color: #bdc1c6; }
+        .icon-box { 
+            width: 56px; height: 56px; border: 1px solid #5f6368; border-radius: 50%; 
+            margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+
+        .end-btn-container { display: flex; justify-content: center; padding-bottom: 40px; }
+        .end-btn { width: 72px; height: 72px; background: var(--google-red); border-radius: 50%; border: none; color: white; font-size: 30px; transform: rotate(135deg); }
+
+        /* Summary Overlay */
+        #summary { background: #000; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <div id="setup">
-        <div class="input-group">
-            <label>Caller Name</label>
-            <input type="text" id="callerName" placeholder="e.g., Board of Directors" value="Mom">
-        </div>
-        <div class="input-group">
-            <label>Call Time</label>
+        <div class="input-card">
+            <h2 style="margin-top:0">Aethercore Call</h2>
+            <input type="text" id="callerName" placeholder="Name" value="Dad">
             <input type="time" id="callTime">
         </div>
-        <button class="btn-start" onclick="initiateSystem()">Lock & Schedule</button>
+        <button class="btn-prime" onclick="init()">Schedule & Lock</button>
     </div>
 
-    <div id="fake-black" class="full-overlay"></div>
+    <div id="fake-black" class="full-layer" style="background:#000;"></div>
 
-    <div id="call-ui" class="full-overlay">
-        <div class="caller-meta">
-            <h1 id="ui-name">Unknown</h1>
-            <div id="ui-status" class="status">Mobile</div>
-        </div>
+    <div id="call-ui" class="full-layer">
+        <div class="avatar">👤</div>
+        <div class="caller-name" id="ui-name">Name</div>
+        <div class="call-status" id="ui-status">Calling...</div>
 
-        <div id="active-tools" class="action-grid" style="display: none;">
-            <div class="action-item"><div class="icon-circle">🔇</div>Mute</div>
-            <div class="action-item"><div class="icon-circle">⌨️</div>Keypad</div>
-            <div class="action-item"><div class="icon-circle">🔊</div>Speaker</div>
-            <div class="action-item"><div class="icon-circle">➕</div>Add</div>
-            <div class="action-item"><div class="icon-circle">🎥</div>FaceTime</div>
-            <div class="action-item"><div class="icon-circle">👤</div>Contacts</div>
-        </div>
+        <div class="controls-container">
+            <div id="incoming-btns">
+                <button class="circle-btn dec" onclick="reset()">📞</button>
+                <button class="circle-btn ans" onclick="accept()">📞</button>
+            </div>
 
-        <div id="incoming-actions" class="call-controls">
-            <button class="btn-call decline" onclick="endEverything()">📞</button>
-            <button class="btn-call accept" onclick="acceptCall()">📞</button>
-        </div>
-
-        <div id="active-actions" style="display: none; width: 100%;">
-            <div class="end-call" onclick="endEverything()">📞</div>
-        </div>
-    </div>
-
-    <div id="summary" class="full-overlay">
-        <div class="summary-card">
-            <h2 id="summary-name">Caller</h2>
-            <p id="summary-duration" style="color: #666;">00:00</p>
-            <button class="btn-start" style="width: 100%; margin-top: 20px;" onclick="location.reload()">Call Again</button>
+            <div id="active-ui" style="display:none">
+                <div id="active-grid">
+                    <div class="grid-item"><div class="icon-box">🔇</div>Mute</div>
+                    <div class="grid-item"><div class="icon-box">⌨️</div>Keypad</div>
+                    <div class="grid-item"><div class="icon-box">🔊</div>Speaker</div>
+                    <div class="grid-item"><div class="icon-box">➕</div>Add</div>
+                    <div class="grid-item"><div class="icon-box">⏸️</div>Hold</div>
+                    <div class="grid-item"><div class="icon-box">🛡️</div>Verified</div>
+                </div>
+                <div class="end-btn-container">
+                    <button class="end-btn" onclick="terminate()">📞</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <audio id="ringtone" src="https://assets.mixkit.co/sfx/preview/mixkit-cell-phone-vibrating-ringing-2751.mp3" loop></audio>
+    <div id="summary" class="full-layer">
+        <h1 id="sum-name">Done</h1>
+        <p id="sum-dur" style="color:#9aa0a6"></p>
+        <button class="btn-prime" style="width:200px; margin-top:30px" onclick="location.reload()">Return</button>
+    </div>
+
+    <audio id="ring" src="https://assets.mixkit.co/sfx/preview/mixkit-outgoing-call-signal-long-distance-2114.mp3" loop></audio>
 
     <script>
-        let wakeLock = null;
-        let callStartTime = null;
-        let timerInterval = null;
+        let wl = null;
+        let start = null;
+        let iv = null;
 
-        async function initiateSystem() {
-            const timeVal = document.getElementById('callTime').value;
-            if(!timeVal) return alert("Please set a time.");
+        async function init() {
+            const t = document.getElementById('callTime').value;
+            if(!t) return;
 
-            // Request Fullscreen
-            document.documentElement.requestFullscreen().catch(e => console.log(e));
+            // Fullscreen & WakeLock
+            if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+            if('wakeLock' in navigator) wl = await navigator.wakeLock.request('screen');
 
-            // Request Wake Lock
-            if ('wakeLock' in navigator) {
-                wakeLock = await navigator.wakeLock.request('screen');
-            }
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('fake-black').style.display = 'flex';
 
-            // Hide Setup, Show Black
-            document.getElementById('setup').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('setup').style.display = 'none';
-                document.getElementById('fake-black').style.display = 'block';
-            }, 500);
-
-            // Start Monitoring Time
             const monitor = setInterval(() => {
                 const now = new Date();
-                const current = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-                if (current === timeVal) {
+                if(`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` === t) {
                     clearInterval(monitor);
-                    triggerIncoming();
+                    incoming();
                 }
             }, 1000);
         }
 
-        function triggerIncoming() {
+        function incoming() {
             document.getElementById('fake-black').style.display = 'none';
             document.getElementById('call-ui').style.display = 'flex';
             document.getElementById('ui-name').innerText = document.getElementById('callerName').value;
-            document.getElementById('ringtone').play();
+            document.getElementById('ring').play();
             if(navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
         }
 
-        function acceptCall() {
-            document.getElementById('ringtone').pause();
-            document.getElementById('incoming-actions').style.display = 'none';
-            document.getElementById('active-tools').style.display = 'grid';
-            document.getElementById('active-actions').style.display = 'block';
-            
-            callStartTime = Date.now();
-            timerInterval = setInterval(updateCallDuration, 1000);
+        function accept() {
+            document.getElementById('ring').pause();
+            document.getElementById('incoming-btns').style.display = 'none';
+            document.getElementById('active-ui').style.display = 'block';
+            start = Date.now();
+            iv = setInterval(() => {
+                const s = Math.floor((Date.now() - start)/1000);
+                document.getElementById('ui-status').innerText = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+            }, 1000);
         }
 
-        function updateCallDuration() {
-            const diff = Math.floor((Date.now() - callStartTime) / 1000);
-            const mins = String(Math.floor(diff / 60)).padStart(2, '0');
-            const secs = String(diff % 60).padStart(2, '0');
-            document.getElementById('ui-status').innerText = `${mins}:${secs}`;
-        }
-
-        function endEverything() {
-            const durationText = document.getElementById('ui-status').innerText;
-            clearInterval(timerInterval);
-            document.getElementById('ringtone').pause();
-            
+        function terminate() {
+            const dur = document.getElementById('ui-status').innerText;
+            clearInterval(iv);
             document.getElementById('call-ui').style.display = 'none';
             document.getElementById('summary').style.display = 'flex';
-            document.getElementById('summary-name').innerText = document.getElementById('callerName').value;
-            document.getElementById('summary-duration').innerText = `Duration: ${durationText}`;
-            
-            if (document.exitFullscreen) document.exitFullscreen();
-            if (wakeLock) wakeLock.release();
+            document.getElementById('sum-name').innerText = document.getElementById('callerName').value;
+            document.getElementById('sum-dur').innerText = "Call ended • " + dur;
+            if(wl) wl.release();
         }
+
+        function reset() { location.reload(); }
     </script>
 </body>
 </html>
