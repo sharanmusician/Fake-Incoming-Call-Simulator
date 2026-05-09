@@ -6,208 +6,208 @@
     <title>Phone</title>
     <style>
         :root {
-            --google-blue: #041e49;
-            --google-text: #e2e2e2;
+            --surface: #1a1c1e;
+            --on-surface: #e2e2e2;
+            --google-blue: #a8c7fa;
             --google-red: #f28b82;
             --google-green: #81c995;
-            --surface: #1a1c1e;
-            --secondary: #3c4043;
+            --nav-bg: #282a2d;
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { 
             margin: 0; padding: 0; width: 100vw; height: 100vh; 
-            background: #000; color: var(--google-text);
-            font-family: 'Google Sans', Roboto, Arial, sans-serif; overflow: hidden;
+            background: #000; color: var(--on-surface);
+            font-family: 'Google Sans', Roboto, sans-serif; overflow: hidden;
         }
 
-        /* 1. Setup Phase */
-        #setup { 
-            padding: 40px 24px; display: flex; flex-direction: column; height: 100%; justify-content: center;
-            background: #000; z-index: 10; position: relative;
-        }
-        .input-card { background: #111; padding: 30px; border-radius: 28px; border: 1px solid #333; }
-        input { 
-            width: 100%; padding: 18px; margin: 12px 0; border: none; 
-            background: #252525; color: #fff; border-radius: 16px; font-size: 16px;
-        }
-        .btn-set { 
-            background: #a8c7fa; color: #062e6f; padding: 18px; 
-            border-radius: 100px; border: none; font-weight: 500; width: 100%; margin-top: 10px;
-        }
+        /* 1. Setup */
+        #setup { padding: 40px 24px; display: flex; flex-direction: column; height: 100%; justify-content: center; position: relative; z-index: 100; background: #000; }
+        input { width: 100%; padding: 18px; margin: 10px 0; border: none; background: #252525; color: #fff; border-radius: 16px; font-size: 16px; }
+        .btn-set { background: var(--google-blue); color: #062e6f; padding: 18px; border-radius: 100px; border: none; font-weight: 500; width: 100%; margin-top: 20px; font-size: 16px; }
 
-        /* 2. Fullscreen Layers */
-        .full-layer { 
-            position: fixed; inset: 0; width: 100%; height: 100%; 
-            display: none; z-index: 9999; flex-direction: column;
-        }
+        .full-layer { position: fixed; inset: 0; width: 100%; height: 100%; display: none; z-index: 9999; flex-direction: column; }
 
-        /* 3. Incoming Call UI (Google Style) */
-        #call-ui { background: var(--surface); padding-top: 12vh; align-items: center; }
-        .caller-avatar { 
-            width: 85px; height: 85px; background: #303134; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            font-size: 38px; color: #8ab4f8; margin-bottom: 24px;
-        }
-        .caller-name { font-size: 34px; font-weight: 400; letter-spacing: -0.5px; }
-        .call-label { color: #9aa0a6; margin-top: 10px; font-size: 18px; }
+        /* 2. Google Dialer UI */
+        #call-ui { background: var(--surface); padding-top: 10vh; align-items: center; }
+        .avatar { width: 90px; height: 90px; background: #303134; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #8ab4f8; margin-bottom: 20px; }
+        .caller-name { font-size: 36px; font-weight: 400; }
+        .status { color: #9aa0a6; font-size: 18px; margin-top: 8px; }
 
-        /* Incoming Controls */
-        #incoming-controls { margin-top: auto; padding-bottom: 15vh; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .swipe-hint { color: #9aa0a6; font-size: 14px; margin-bottom: 40px; }
-        .action-row { display: flex; width: 100%; justify-content: space-evenly; }
-        
         /* Buttons */
-        .btn-circle { 
-            width: 76px; height: 76px; border-radius: 50%; border: none;
-            display: flex; align-items: center; justify-content: center; font-size: 32px;
-        }
-        .btn-decline { background: #f28b82; color: #3c0000; transform: rotate(135deg); }
-        .btn-answer { background: #81c995; color: #003913; }
-        
-        /* 4. Active Call UI (The 3x2 Grid) */
-        #active-ui { display: none; width: 100%; flex-direction: column; align-items: center; margin-top: auto; }
-        .active-grid { 
-            display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 25px; padding: 0 40px 60px; width: 100%;
-        }
-        .grid-icon-wrap { text-align: center; color: #e2e2e2; font-size: 12px; }
-        .icon-circle { 
-            width: 64px; height: 64px; border: 1px solid #5f6368; border-radius: 50%; 
-            margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 22px;
-        }
-        .end-call-btn { 
-            width: 76px; height: 76px; background: #ea4335; border-radius: 50%; border: none; 
-            color: white; font-size: 32px; transform: rotate(135deg); margin-bottom: 60px;
-        }
+        .controls { margin-top: auto; padding-bottom: 10vh; width: 100%; }
+        .action-row { display: flex; justify-content: space-evenly; width: 100%; }
+        .btn-round { width: 75px; height: 75px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; }
+        .dec { background: var(--google-red); transform: rotate(135deg); }
+        .ans { background: var(--google-green); }
 
-        /* 5. Realistic History UI (After Decline) */
-        #history-ui { background: #000; padding: 20px; }
-        .history-header { border-bottom: 1px solid #333; padding: 20px 0; display: flex; align-items: center; gap: 15px; }
-        .history-item { display: flex; align-items: center; padding: 20px 0; gap: 15px; }
-        .missed-label { color: #f28b82; font-size: 14px; }
+        /* Active Grid */
+        .active-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 30px 40px; width: 100%; }
+        .grid-item { text-align: center; font-size: 12px; color: #bdc1c6; }
+        .icon-box { width: 60px; height: 60px; border: 1px solid #5f6368; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+
+        /* 3. History UI */
+        #history-ui { background: #000; padding: 20px 0 0 0; }
+        .tab-header { padding: 20px; font-size: 22px; border-bottom: 1px solid #222; }
+        .list { flex: 1; overflow-y: auto; padding: 0 20px; }
+        .item { display: flex; align-items: center; padding: 18px 0; gap: 15px; border-bottom: 1px solid #111; }
+        .item-info { flex: 1; }
+        .missed { color: var(--google-red); }
+        .nav-bar { height: 70px; background: var(--nav-bg); display: flex; justify-content: space-around; align-items: center; border-radius: 30px 30px 0 0; }
+        .nav-item { text-align: center; font-size: 11px; color: #9aa0a6; }
+        .nav-active { color: var(--google-blue); }
+
+        /* 4. Dialpad Overlay */
+        #dialpad { position: absolute; bottom: 85px; right: 20px; width: 56px; height: 56px; background: var(--google-blue); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #041e49; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
     <div id="setup">
-        <div class="input-card">
-            <h2 style="font-weight:400; margin-bottom:20px;">Aethercore Dialer</h2>
-            <label style="font-size:12px; color:#9aa0a6">TARGET NAME</label>
-            <input type="text" id="callerName" value="Dad">
-            <label style="font-size:12px; color:#9aa0a6">SCHEDULE TIME</label>
-            <input type="time" id="callTime">
-            <button class="btn-set" onclick="startSystem()">Schedule Call</button>
-        </div>
+        <h1 style="font-weight: 300;">Aethercore Pro</h1>
+        <input type="text" id="callerName" value="Mom">
+        <input type="time" id="callTime">
+        <button class="btn-set" onclick="initSystem()">Lock & Initialize</button>
     </div>
 
     <div id="fake-black" class="full-layer" style="background:#000;"></div>
 
     <div id="call-ui" class="full-layer">
-        <div class="caller-avatar">👤</div>
-        <div class="caller-name" id="ui-name">Caller</div>
-        <div class="call-label" id="ui-status">Incoming call</div>
+        <div class="avatar">👤</div>
+        <div id="ui-name" class="caller-name">Mom</div>
+        <div id="ui-status" class="status">Incoming call</div>
 
-        <div id="incoming-controls">
-            <div class="swipe-hint">Google Verified Business</div>
-            <div class="action-row">
-                <button class="btn-circle btn-decline" onclick="terminateCall('Declined')">📞</button>
-                <button class="btn-circle btn-answer" onclick="answerCall()">📞</button>
+        <div class="controls">
+            <div id="incoming-actions" class="action-row">
+                <button class="btn-round dec" onclick="endCall('Declined')">📞</button>
+                <button class="btn-round ans" onclick="acceptCall()">📞</button>
             </div>
-        </div>
-
-        <div id="active-ui">
-            <div class="active-grid">
-                <div class="grid-icon-wrap"><div class="icon-circle">🔇</div>Mute</div>
-                <div class="grid-icon-wrap"><div class="icon-circle">⌨️</div>Keypad</div>
-                <div class="grid-icon-wrap"><div class="icon-circle">🔊</div>Speaker</div>
-                <div class="grid-icon-wrap"><div class="icon-circle">➕</div>Add call</div>
-                <div class="grid-icon-wrap"><div class="icon-circle">⏸️</div>Hold</div>
-                <div class="grid-icon-wrap"><div class="icon-circle">🎞️</div>Record</div>
+            <div id="active-actions" style="display:none">
+                <div class="active-grid">
+                    <div class="grid-item"><div class="icon-box">🔇</div>Mute</div>
+                    <div class="grid-item"><div class="icon-box">⌨️</div>Keypad</div>
+                    <div class="grid-item"><div class="icon-box">🔊</div>Speaker</div>
+                    <div class="grid-item"><div class="icon-box">➕</div>Add</div>
+                    <div class="grid-item"><div class="icon-box">⏸️</div>Hold</div>
+                    <div class="grid-item"><div class="icon-box">🎙️</div>Record</div>
+                </div>
+                <div style="display:flex; justify-content:center">
+                    <button class="btn-round dec" onclick="endCall('Ended')">📞</button>
+                </div>
             </div>
-            <button class="end-call-btn" onclick="terminateCall('Call ended')">📞</button>
         </div>
     </div>
 
     <div id="history-ui" class="full-layer">
-        <div class="history-header">
-            <span style="font-size: 20px;">Recents</span>
-        </div>
-        <div class="history-item">
-            <div style="width:45px; height:45px; background:#303134; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#8ab4f8">👤</div>
-            <div style="flex:1">
-                <div id="hist-name" style="font-size:16px;">Caller</div>
-                <div class="missed-label" id="hist-status">Missed</div>
+        <div class="tab-header">Recents</div>
+        <div class="list">
+            <div class="item">
+                <div class="avatar" style="width:45px; height:45px; font-size:18px; margin:0">👤</div>
+                <div class="item-info">
+                    <div class="missed" id="hist-dynamic-name">Mom</div>
+                    <div style="font-size:12px; color:#9aa0a6">Mobile • Just now</div>
+                </div>
+                <div style="font-size:20px; color:#5f6368">📞</div>
             </div>
-            <div style="color:#9aa0a6; font-size:12px;">Just now</div>
+            <div class="item">
+                <div class="avatar" style="width:45px; height:45px; font-size:18px; margin:0">👤</div>
+                <div class="item-info">
+                    <div>Dad</div>
+                    <div style="font-size:12px; color:#9aa0a6">Mobile • 24 min ago</div>
+                </div>
+                <div style="font-size:20px; color:#5f6368">📞</div>
+            </div>
         </div>
-        <button class="btn-set" style="margin-top:auto" onclick="location.reload()">Back to Home</button>
+
+        <div id="dialpad">⌨️</div>
+
+        <div class="nav-bar">
+            <div class="nav-item">⭐<br>Favorites</div>
+            <div class="nav-item nav-active">🕒<br>Recents</div>
+            <div class="nav-item">👤<br>Contacts</div>
+        </div>
     </div>
 
     <audio id="ring" src="https://assets.mixkit.co/sfx/preview/mixkit-cell-phone-vibrating-ringing-2751.mp3" loop></audio>
 
     <script>
-        let wakeLock = null;
-        let timer = null;
-        let startTime = null;
+        let wl = null;
+        let vibInterval = null;
+        let callTimer = null;
 
-        async function startSystem() {
-            const t = document.getElementById('callTime').value;
-            if(!t) return alert("Select a time first");
+        async function initSystem() {
+            const time = document.getElementById('callTime').value;
+            if(!time) return;
 
-            // Fullscreen & Wake
             document.documentElement.requestFullscreen().catch(() => {});
-            if('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
+            if('wakeLock' in navigator) wl = await navigator.wakeLock.request('screen');
 
             document.getElementById('setup').style.display = 'none';
             document.getElementById('fake-black').style.display = 'flex';
 
-            const monitor = setInterval(() => {
+            const check = setInterval(() => {
                 const now = new Date();
-                const cur = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-                if(cur === t) {
-                    clearInterval(monitor);
-                    showIncoming();
+                if(`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` === time) {
+                    clearInterval(check);
+                    triggerCall();
                 }
             }, 1000);
         }
 
-        function showIncoming() {
+        function triggerCall() {
             document.getElementById('fake-black').style.display = 'none';
             document.getElementById('call-ui').style.display = 'flex';
             document.getElementById('ui-name').innerText = document.getElementById('callerName').value;
             document.getElementById('ring').play();
-            if(navigator.vibrate) navigator.vibrate([800, 400, 800]);
+            
+            // Continuous Vibration logic
+            if (navigator.vibrate) {
+                navigator.vibrate([1000, 500, 1000]);
+                vibInterval = setInterval(() => {
+                    navigator.vibrate([1000, 500, 1000]);
+                }, 2500);
+            }
         }
 
-        function answerCall() {
+        function acceptCall() {
+            clearInterval(vibInterval);
+            if(navigator.vibrate) navigator.vibrate(0);
             document.getElementById('ring').pause();
-            document.getElementById('incoming-controls').style.display = 'none';
-            document.getElementById('active-ui').style.display = 'flex';
+            document.getElementById('incoming-actions').style.display = 'none';
+            document.getElementById('active-actions').style.display = 'block';
             
-            startTime = Date.now();
-            timer = setInterval(() => {
-                const sec = Math.floor((Date.now() - startTime)/1000);
+            let sec = 0;
+            callTimer = setInterval(() => {
+                sec++;
                 document.getElementById('ui-status').innerText = `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
             }, 1000);
         }
 
-        function terminateCall(statusType) {
+        function endCall(type) {
+            clearInterval(vibInterval);
+            clearInterval(callTimer);
             document.getElementById('ring').pause();
-            clearInterval(timer);
             
-            // Brief "Call Ended" feedback
-            document.getElementById('ui-status').innerText = statusType;
-            document.getElementById('active-ui').style.opacity = '0.3';
+            const name = document.getElementById('callerName').value;
+            const status = document.getElementById('ui-status').innerText;
+            
+            document.getElementById('ui-status').innerText = type === 'Declined' ? 'Missed call' : 'Call ended';
             
             setTimeout(() => {
                 document.getElementById('call-ui').style.display = 'none';
                 document.getElementById('history-ui').style.display = 'flex';
-                document.getElementById('hist-name').innerText = document.getElementById('callerName').value;
-                document.getElementById('hist-status').innerText = (statusType === 'Declined') ? 'Missed' : 'Outgoing • ' + document.getElementById('ui-status').innerText;
+                document.getElementById('hist-dynamic-name').innerText = name;
+                if(type !== 'Declined') {
+                    document.getElementById('hist-dynamic-name').classList.remove('missed');
+                }
             }, 800);
 
-            if(wakeLock) wakeLock.release();
+            if(wl) wl.release();
         }
+
+        // Functional Dialpad toggle (Visual)
+        document.getElementById('dialpad').onclick = () => {
+            alert("Dialpad active - Search for contacts");
+        };
     </script>
 </body>
 </html>
