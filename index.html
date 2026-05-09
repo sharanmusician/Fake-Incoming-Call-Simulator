@@ -14,53 +14,58 @@
             --nav: #282a2d;
             --btn-bg: #303134;
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Roboto', sans-serif; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            font-family: 'Roboto', sans-serif;
+            /* Prevents any long-press or selection popups */
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: none;
+        }
         body { margin: 0; background: #000; color: var(--on-surf); overflow: hidden; height: 100vh; width: 100vw; }
 
         /* Setup Screen */
         #setup { padding: 40px 24px; display: flex; flex-direction: column; height: 100%; justify-content: center; background: #000; z-index: 1000; }
         .setup-card { background: #111; padding: 30px; border-radius: 28px; border: 1px solid #333; }
-        label { color: var(--blue); font-size: 11px; letter-spacing: 1px; margin-left: 5px; }
-        input { width: 100%; padding: 18px; margin: 8px 0 20px; border: none; background: #252525; color: #fff; border-radius: 16px; font-size: 16px; }
-        .btn-set { background: var(--blue); color: #062e6f; padding: 18px; border-radius: 100px; border: none; font-weight: bold; width: 100%; font-size: 16px; }
+        input { width: 100%; padding: 18px; margin: 12px 0 20px; border: none; background: #252525; color: #fff; border-radius: 16px; font-size: 16px; touch-action: auto !important; }
+        .btn-set { background: var(--blue); color: #062e6f; padding: 18px; border-radius: 100px; border: none; font-weight: bold; width: 100%; }
 
         .full { position: fixed; inset: 0; width: 100%; height: 100%; display: none; z-index: 9999; flex-direction: column; }
 
         /* Call Screen */
         #call-ui { background: var(--surface); padding-top: 10vh; align-items: center; }
-        .avatar { width: 95px; height: 95px; background: var(--btn-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #8ab4f8; margin-bottom: 24px; }
-        .caller-name { font-size: 34px; font-weight: 400; text-align: center; }
-        .status { color: #9aa0a6; font-size: 18px; margin-top: 8px; text-align: center; }
+        .avatar { width: 110px; height: 110px; background: #1b5099; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 55px; color: #fff; margin-bottom: 24px; }
+        .caller-name { font-size: 42px; font-weight: 400; text-align: center; margin-bottom: 8px; }
+        .status { color: #9aa0a6; font-size: 20px; text-align: center; }
 
         /* Controls Area */
         .controls { margin-top: auto; padding-bottom: 8vh; width: 100%; }
-        .btn-r { width: 75px; height: 75px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; }
-        .dec { background: var(--red); transform: rotate(135deg); }
-        .ans { background: var(--green); }
+        .btn-r { width: 85px; height: 85px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 38px; color: #fff; }
+        .dec { background: #f28b82; transform: rotate(135deg); }
+        .ans { background: #81c995; }
 
-        /* Active Grid */
-        #act-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 0 40px 60px; width: 100%; }
-        .grid-item { text-align: center; font-size: 13px; }
-        .icon-box { width: 62px; height: 62px; border: 1px solid #5f6368; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        /* Active Grid (Matches your Image) */
+        #act-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 35px 80px; width: 100%; }
+        .grid-item { text-align: center; font-size: 15px; color: #bdc1c6; }
+        .icon-box { width: 70px; height: 70px; border: 1px solid #5f6368; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
 
         /* Recents UI */
         #history-ui { background: #000; }
         .list { flex: 1; overflow-y: auto; padding: 10px 20px; }
-        .item { display: flex; align-items: center; padding: 16px 0; gap: 15px; border-bottom: 1px solid #1a1a1a; }
+        .item { display: flex; align-items: center; padding: 18px 0; gap: 15px; border-bottom: 1px solid #1a1a1a; }
         .missed { color: var(--red) !important; }
-        .nav-bar { height: 85px; background: var(--nav); display: flex; justify-content: space-around; align-items: center; border-radius: 30px 30px 0 0; }
+        .nav-bar { height: 90px; background: var(--nav); display: flex; justify-content: space-around; align-items: center; border-radius: 35px 35px 0 0; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <div id="setup">
         <div class="setup-card">
-            <h1 style="font-weight:300; margin-top:0;">Aethercore</h1>
-            <label>CALLER</label>
+            <h2 style="font-weight:300; color:var(--blue)">Prank Config</h2>
             <input type="text" id="callerName" value="Mom">
-            <label>TIME</label>
             <input type="time" id="callTime">
-            <button class="btn-set" onclick="startSystem()">Lock & Initialize</button>
+            <button class="btn-set" onclick="startSystem()">Lock Screen</button>
         </div>
     </div>
 
@@ -94,28 +99,28 @@
     </div>
 
     <div id="history-ui" class="full">
-        <div style="padding:24px 24px 10px; font-size:22px;">Recents</div>
+        <div style="padding:24px 24px 10px; font-size:24px;">Recents</div>
         <div class="list">
             <div class="item">
                 <div class="avatar" style="width:45px; height:45px; font-size:20px; margin:0">👤</div>
                 <div style="flex:1"><div id="hist-mom" class="missed">Mom</div><div style="font-size:12px; color:#9aa0a6">Just now</div></div>
-                <div style="font-size:22px" onclick="reCall('Mom')">📞</div>
+                <div style="font-size:24px" onclick="reCall('Mom')">📞</div>
             </div>
             <div class="item">
                 <div class="avatar" style="width:45px; height:45px; font-size:20px; margin:0">👤</div>
                 <div style="flex:1"><div class="missed">Dad</div><div style="font-size:12px; color:#9aa0a6">2 hrs ago</div></div>
-                <div style="font-size:22px" onclick="reCall('Dad')">📞</div>
+                <div style="font-size:24px" onclick="reCall('Dad')">📞</div>
             </div>
             <div class="item">
                 <div class="avatar" style="width:45px; height:45px; font-size:20px; margin:0">👤</div>
                 <div style="flex:1"><div>Sisy</div><div style="font-size:12px; color:#9aa0a6">Yesterday</div></div>
-                <div style="font-size:22px" onclick="reCall('Sisy')">📞</div>
+                <div style="font-size:24px" onclick="reCall('Sisy')">📞</div>
             </div>
         </div>
         <div class="nav-bar">
-            <div style="text-align:center; color:#9aa0a6; font-size:11px">⭐<br>Favorites</div>
-            <div style="text-align:center; color:var(--blue); font-size:11px">🕒<br>Recents</div>
-            <div style="text-align:center; color:#9aa0a6; font-size:11px">👤<br>Contacts</div>
+            <div style="text-align:center; color:#9aa0a6; font-size:12px">⭐<br>Favorites</div>
+            <div style="text-align:center; color:var(--blue); font-size:12px">🕒<br>Recents</div>
+            <div style="text-align:center; color:#9aa0a6; font-size:12px">👤<br>Contacts</div>
         </div>
     </div>
 
@@ -123,6 +128,9 @@
 
     <script>
         let wl = null, vib = null, timer = null;
+
+        // Block all default browser touch behaviors (prevents Google popups)
+        window.addEventListener('touchstart', (e) => { if(e.target.tagName !== 'INPUT') e.preventDefault(); }, {passive: false});
 
         async function startSystem() {
             const time = document.getElementById('callTime').value;
@@ -132,10 +140,10 @@
             document.getElementById('setup').style.display='none';
             document.getElementById('black-scr').style.display='flex';
             
-            const monitor = setInterval(() => {
+            setInterval(() => {
                 const now = new Date();
                 const cur = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-                if(cur === time) { clearInterval(monitor); triggerCall(); }
+                if(cur === time) triggerCall();
             }, 1000);
         }
 
@@ -144,15 +152,13 @@
             document.getElementById('call-ui').style.display='flex';
             document.getElementById('ui-name').innerText = document.getElementById('callerName').value;
             document.getElementById('ring').play();
-            
-            // Pulse Vibration: 1.2s on, 1.5s off
-            const pulse = () => { if(navigator.vibrate) navigator.vibrate([1200, 1500]); };
+            const pulse = () => { if(navigator.vibrate) navigator.vibrate([1000, 1200]); };
             pulse();
-            vib = setInterval(pulse, 2700);
+            vib = setInterval(pulse, 2200);
         }
 
         function acceptCall() {
-            stopVibration();
+            stopVib();
             document.getElementById('ring').pause();
             document.getElementById('inc-row').style.display='none';
             document.getElementById('act-row').style.display='block';
@@ -164,7 +170,7 @@
         }
 
         function terminate(type) {
-            stopVibration();
+            stopVib();
             clearInterval(timer);
             document.getElementById('ring').pause();
             document.getElementById('ui-status').innerText = type === 'Declined' ? 'Missed call' : 'Call ended';
@@ -172,16 +178,12 @@
             setTimeout(() => {
                 document.getElementById('call-ui').style.display='none';
                 document.getElementById('history-ui').style.display='flex';
-                const currentName = document.getElementById('callerName').value;
-                document.getElementById('hist-mom').innerText = currentName;
+                document.getElementById('hist-mom').innerText = document.getElementById('callerName').value;
                 if(type !== 'Declined') document.getElementById('hist-mom').classList.remove('missed');
             }, 800);
         }
 
-        function stopVibration() {
-            clearInterval(vib);
-            if(navigator.vibrate) navigator.vibrate(0);
-        }
+        function stopVib() { clearInterval(vib); if(navigator.vibrate) navigator.vibrate(0); }
 
         function reCall(name) {
             document.getElementById('history-ui').style.display='none';
